@@ -1,4 +1,4 @@
-package com.loktarius
+package com.loktarius.feature_activity.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
