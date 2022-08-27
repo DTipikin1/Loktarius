@@ -13,4 +13,8 @@ import com.loktarius.feature_activity.domain.model.Tag
 abstract class ActivityDatabase: RoomDatabase() {
 
     abstract val activityDao: ActivityDao
+
+    companion object {
+        val DATABASE_NAME = "activities_db"
+    }
 }
