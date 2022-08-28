@@ -9,3 +9,5 @@ data class Tag(
     val timestamp: Long,
     @PrimaryKey val id: Int? = null
 )
+
+class InvalidTagException(message: String): Exception(message)

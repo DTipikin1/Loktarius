@@ -7,7 +7,7 @@ import com.loktarius.feature_activity.domain.util.TagOrder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class getTags(
+class GetTags(
     private val repository: ActivityRepository
 ) {
 

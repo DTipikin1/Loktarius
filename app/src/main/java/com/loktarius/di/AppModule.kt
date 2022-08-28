@@ -5,9 +5,7 @@ import androidx.room.Room
 import com.loktarius.feature_activity.data.data_source.ActivityDatabase
 import com.loktarius.feature_activity.data.repository.ActivityRepositoryImpl
 import com.loktarius.feature_activity.domain.repository.ActivityRepository
-import com.loktarius.feature_activity.domain.use_case.TagUseCases
-import com.loktarius.feature_activity.domain.use_case.deleteTag
-import com.loktarius.feature_activity.domain.use_case.getTags
+import com.loktarius.feature_activity.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,8 +37,9 @@ object AppModule {
     @Singleton
     fun provideTagsUseCases(repository: ActivityRepository): TagUseCases {
         return TagUseCases(
-            getTags = getTags(repository),
-            deleteTag = deleteTag(repository)
+            getTags = GetTags(repository),
+            deleteTag = DeleteTag(repository),
+            addTag = AddTag(repository)
         )
     }
 }
