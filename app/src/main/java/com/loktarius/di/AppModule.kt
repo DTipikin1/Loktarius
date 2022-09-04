@@ -39,7 +39,8 @@ object AppModule {
         return TagUseCases(
             getTags = GetTags(repository),
             deleteTag = DeleteTag(repository),
-            addTag = AddTag(repository)
+            addTag = AddTag(repository),
+            getTag = GetTag(repository)
         )
     }
 }

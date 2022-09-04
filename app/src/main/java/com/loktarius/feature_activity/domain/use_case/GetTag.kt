@@ -3,7 +3,7 @@ package com.loktarius.feature_activity.domain.use_case
 import com.loktarius.feature_activity.domain.model.Tag
 import com.loktarius.feature_activity.domain.repository.ActivityRepository
 
-class getTag(
+class GetTag(
     val repository: ActivityRepository
 ) {
 
