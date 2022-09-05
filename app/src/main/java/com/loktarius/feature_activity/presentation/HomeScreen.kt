@@ -1,7 +1,9 @@
 package com.loktarius.feature_activity.presentation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -16,9 +18,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.loktarius.feature_activity.presentation.activities.ActivitiesViewModel
 import com.loktarius.feature_activity.presentation.activities.components.TagItem
+import com.loktarius.feature_activity.presentation.util.Screen
+import com.loktarius.ui.theme.*
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterialApi
 @Composable
 fun HomeScreen(
@@ -38,17 +43,28 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .height(200.dp),
             ) {
-                Text(text = "Hello from sheet")
-                LazyRow(modifier = Modifier.fillMaxSize()) {
+                Column() {
+
+
+                Text(text = "Long click on tag to edit it, quick click to chose it")
+                AddTagButton(navController = navController)
+                LazyRow(modifier = Modifier.fillMaxWidth()) {
+
                     items(state.tags) { tag ->
                         TagItem(
                             tag = tag,
                             modifier = Modifier
-                                .width(10.dp)
-                                .height(10.dp)
-                                .clickable {
-
-                                },
+                                .width(50.dp)
+                                .height(50.dp)
+                                .combinedClickable(
+                                    onClick = { },
+                                    onLongClick = {
+                                        navController.navigate(
+                                            Screen.AddEditTagScreen.route
+                                                    + "?tagId=${tag.id}"
+                                        )
+                                    },
+                                )
 
                         )
                         Spacer(modifier = Modifier.width(5.dp))
@@ -56,11 +72,12 @@ fun HomeScreen(
                     }
                 }
             }
+            }
         }, sheetPeekHeight = 0.dp,
-        sheetBackgroundColor = Color.Green    ) {
+        sheetBackgroundColor = RedPink) {
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(RedOrange)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -90,5 +107,16 @@ fun HomeScreen(
         }
 
         }
+}
+
+
+
+@Composable
+fun AddTagButton(navController: NavController) {
+    Button(onClick = {
+        navController.navigate(Screen.AddEditTagScreen.route)
+    }) {
+        Text(text = "Add Tag")
+    }
 }
 
