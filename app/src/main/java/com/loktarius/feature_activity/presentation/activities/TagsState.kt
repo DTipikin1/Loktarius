@@ -6,5 +6,6 @@ import com.loktarius.feature_activity.domain.util.TagOrder
 
 data class TagsState(
     val tags: List<Tag> = emptyList(),
-    val tagOrder: TagOrder = TagOrder.Date(OrderType.Descending)
+    val tagOrder: TagOrder = TagOrder.Date(OrderType.Descending),
+    var lastUsedTag: Tag? = null
 )

@@ -12,4 +12,6 @@ interface ActivityRepository {
     suspend fun insertTag(tag: Tag)
 
     suspend fun deleteTag(tag: Tag)
+
+    suspend fun getLastUsedTag(): Tag?
 }

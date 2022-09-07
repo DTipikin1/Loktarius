@@ -17,4 +17,7 @@ interface ActivityDao {
 
     @Delete
     suspend fun deleteTag(tag: Tag)
+
+    @Query("SELECT * FROM tag ORDER BY timestamp DESC LIMIT 1")
+    suspend fun getLastUsedTag(): Tag?
 }

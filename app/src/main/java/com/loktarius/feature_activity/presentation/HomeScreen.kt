@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.loktarius.feature_activity.domain.model.Tag
 import com.loktarius.feature_activity.presentation.activities.ActivitiesViewModel
 import com.loktarius.feature_activity.presentation.activities.components.TagItem
 import com.loktarius.feature_activity.presentation.util.Screen
@@ -31,6 +34,8 @@ fun HomeScreen(
     viewModel: ActivitiesViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    //var currentTag = remember by {}
+
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
@@ -57,7 +62,9 @@ fun HomeScreen(
                                 .width(50.dp)
                                 .height(50.dp)
                                 .combinedClickable(
-                                    onClick = { },
+                                    onClick = {
+                                              state.lastUsedTag = tag
+                                    },
                                     onLongClick = {
                                         navController.navigate(
                                             Screen.AddEditTagScreen.route
@@ -96,6 +103,7 @@ fun HomeScreen(
                 Text(text = "Tag")
 
             }
+            Text(text = state.lastUsedTag.toString())
 
             Spacer(modifier = Modifier.padding(50.dp))
             Text("00:00:00",

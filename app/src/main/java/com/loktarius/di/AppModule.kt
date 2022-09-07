@@ -40,7 +40,8 @@ object AppModule {
             getTags = GetTags(repository),
             deleteTag = DeleteTag(repository),
             addTag = AddTag(repository),
-            getTag = GetTag(repository)
+            getTag = GetTag(repository),
+            getLastUsedTag = GetLastUsedTag(repository)
         )
     }
 }

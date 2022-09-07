@@ -23,4 +23,8 @@ class ActivityRepositoryImpl(
     override suspend fun deleteTag(tag: Tag) {
         return dao.deleteTag(tag)
     }
+
+    override suspend fun getLastUsedTag(): Tag? {
+        return dao.getLastUsedTag()
+    }
 }

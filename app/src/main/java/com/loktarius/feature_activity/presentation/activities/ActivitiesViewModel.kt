@@ -27,8 +27,11 @@ class ActivitiesViewModel @Inject constructor(
 
     private var getTagsJob: Job? = null
 
+
+
     init {
         getTags(TagOrder.Date(OrderType.Descending))
+        getLastUsedTag()
     }
 
     fun onEvent(event: TagsEvent) {
@@ -52,11 +55,17 @@ class ActivitiesViewModel @Inject constructor(
                     recentlyDeletedTag = null
                 }
             }
+            is TagsEvent.ChooseTag -> {
+                viewModelScope.launch {
+                    event.tag.id?.let { tagUseCases.getTag(it) }
+                }
+            }
 
         }
     }
     private fun getTags(tagOrder: TagOrder) {
-        tagUseCases.getTags(tagOrder)
+        getTagsJob?.cancel()
+        getTagsJob = tagUseCases.getTags(tagOrder)
             .onEach { tags ->
                 _state.value = state.value.copy(
                     tags = tags,
@@ -64,5 +73,14 @@ class ActivitiesViewModel @Inject constructor(
                     )
             }
             .launchIn(viewModelScope)
+    }
+    private fun getLastUsedTag() {
+        var lastUsedTag: Tag? = null
+        viewModelScope.launch {
+            lastUsedTag = tagUseCases.getLastUsedTag()
+        }
+        _state.value = state.value.copy(
+            lastUsedTag = lastUsedTag
+        )
     }
 }
