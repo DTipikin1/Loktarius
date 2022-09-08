@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.domain.use_case
+package com.loktarius.feature_activity.domain.use_case.tags
 
 import com.loktarius.feature_activity.domain.model.InvalidTagException
 import com.loktarius.feature_activity.domain.model.Tag

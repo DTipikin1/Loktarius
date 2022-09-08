@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loktarius.feature_activity.domain.model.InvalidTagException
 import com.loktarius.feature_activity.domain.model.Tag
-import com.loktarius.feature_activity.domain.use_case.TagUseCases
+import com.loktarius.feature_activity.domain.use_case.tags.TagUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

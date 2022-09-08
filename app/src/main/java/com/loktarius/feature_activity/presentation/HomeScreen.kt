@@ -1,9 +1,6 @@
 package com.loktarius.feature_activity.presentation
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -11,11 +8,24 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PointMode
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.loktarius.feature_activity.domain.model.Tag
@@ -24,6 +34,9 @@ import com.loktarius.feature_activity.presentation.activities.components.TagItem
 import com.loktarius.feature_activity.presentation.util.Screen
 import com.loktarius.ui.theme.*
 import kotlinx.coroutines.launch
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -34,7 +47,7 @@ fun HomeScreen(
     viewModel: ActivitiesViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
-    //var currentTag = remember by {}
+
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
@@ -63,7 +76,7 @@ fun HomeScreen(
                                 .height(50.dp)
                                 .combinedClickable(
                                     onClick = {
-                                              state.lastUsedTag = tag
+                                        state.lastUsedTag = tag
                                     },
                                     onLongClick = {
                                         navController.navigate(
@@ -127,4 +140,7 @@ fun AddTagButton(navController: NavController) {
         Text(text = "Add Tag")
     }
 }
+
+
+
 

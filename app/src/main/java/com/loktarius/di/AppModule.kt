@@ -5,7 +5,11 @@ import androidx.room.Room
 import com.loktarius.feature_activity.data.data_source.ActivityDatabase
 import com.loktarius.feature_activity.data.repository.ActivityRepositoryImpl
 import com.loktarius.feature_activity.domain.repository.ActivityRepository
-import com.loktarius.feature_activity.domain.use_case.*
+import com.loktarius.feature_activity.domain.use_case.activities.ActivityUseCases
+import com.loktarius.feature_activity.domain.use_case.activities.AddActivity
+import com.loktarius.feature_activity.domain.use_case.activities.DeleteActivity
+import com.loktarius.feature_activity.domain.use_case.activities.GetActivities
+import com.loktarius.feature_activity.domain.use_case.tags.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,6 +46,15 @@ object AppModule {
             addTag = AddTag(repository),
             getTag = GetTag(repository),
             getLastUsedTag = GetLastUsedTag(repository)
+        )
+    }
+    @Provides
+    @Singleton
+    fun provideActivitiesUseCases(repository: ActivityRepository): ActivityUseCases {
+        return ActivityUseCases(
+            getActivities = GetActivities(repository),
+            addActivity = AddActivity(repository),
+            deleteActivity = DeleteActivity(repository)
         )
     }
 }

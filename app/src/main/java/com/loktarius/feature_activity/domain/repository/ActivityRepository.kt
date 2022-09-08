@@ -1,5 +1,6 @@
 package com.loktarius.feature_activity.domain.repository
 
+import com.loktarius.feature_activity.domain.model.Activity
 import com.loktarius.feature_activity.domain.model.Tag
 import kotlinx.coroutines.flow.Flow
 
@@ -14,4 +15,11 @@ interface ActivityRepository {
     suspend fun deleteTag(tag: Tag)
 
     suspend fun getLastUsedTag(): Tag?
+
+    fun getActivities(): Flow<List<Activity>>
+
+    suspend fun insertActivity(activity: Activity)
+
+    suspend fun deleteActivity(activity: Activity)
+
 }

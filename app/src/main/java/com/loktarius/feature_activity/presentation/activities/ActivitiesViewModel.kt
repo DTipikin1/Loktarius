@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loktarius.feature_activity.domain.model.Tag
-import com.loktarius.feature_activity.domain.use_case.TagUseCases
+import com.loktarius.feature_activity.domain.use_case.tags.TagUseCases
 import com.loktarius.feature_activity.domain.util.OrderType
 import com.loktarius.feature_activity.domain.util.TagOrder
 import dagger.hilt.android.lifecycle.HiltViewModel

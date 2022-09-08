@@ -1,6 +1,7 @@
 package com.loktarius.feature_activity.data.repository
 
 import com.loktarius.feature_activity.data.data_source.ActivityDao
+import com.loktarius.feature_activity.domain.model.Activity
 import com.loktarius.feature_activity.domain.model.Tag
 import com.loktarius.feature_activity.domain.repository.ActivityRepository
 import kotlinx.coroutines.flow.Flow
@@ -27,4 +28,17 @@ class ActivityRepositoryImpl(
     override suspend fun getLastUsedTag(): Tag? {
         return dao.getLastUsedTag()
     }
+
+    override fun getActivities(): Flow<List<Activity>> {
+        return dao.getActivities()
+    }
+
+    override suspend fun insertActivity(activity: Activity) {
+        return dao.insertActivity(activity)
+    }
+
+    override suspend fun deleteActivity(activity: Activity) {
+        return dao.deleteActivity(activity)
+    }
+
 }

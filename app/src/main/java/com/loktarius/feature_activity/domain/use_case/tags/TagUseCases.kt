@@ -1,4 +1,5 @@
-package com.loktarius.feature_activity.domain.use_case
+package com.loktarius.feature_activity.domain.use_case.tags
+
 
 data class TagUseCases(
     val getTags: GetTags,
