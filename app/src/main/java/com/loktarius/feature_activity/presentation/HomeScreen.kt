@@ -47,6 +47,9 @@ fun HomeScreen(
     viewModel: ActivitiesViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    var state2 = remember {
+        mutableStateOf(state)
+    }
 
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
@@ -94,10 +97,10 @@ fun HomeScreen(
             }
             }
         }, sheetPeekHeight = 0.dp,
-        sheetBackgroundColor = RedPink) {
+        sheetBackgroundColor = Color.Blue) {
         Column(
             modifier = Modifier
-                .background(RedOrange)
+                .background(BabyBlue)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center

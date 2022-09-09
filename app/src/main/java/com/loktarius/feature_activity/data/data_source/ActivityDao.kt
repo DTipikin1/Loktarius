@@ -20,7 +20,7 @@ interface ActivityDao {
     suspend fun deleteTag(tag: Tag)
 
     @Query("SELECT * FROM tag ORDER BY timestamp DESC LIMIT 1")
-    suspend fun getLastUsedTag(): Tag?
+    fun getLastUsedTag(): Flow<Tag?>
 
     @Query("SELECT * FROM activity")
     fun getActivities(): Flow<List<Activity>>

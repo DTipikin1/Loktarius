@@ -26,7 +26,7 @@ class ActivitiesViewModel @Inject constructor(
     private var recentlyDeletedTag: Tag? = null
 
     private var getTagsJob: Job? = null
-
+    private var getLastUsedTagJob: Job? = null
 
 
     init {
@@ -75,12 +75,15 @@ class ActivitiesViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
     private fun getLastUsedTag() {
-        var lastUsedTag: Tag? = null
-        viewModelScope.launch {
-            lastUsedTag = tagUseCases.getLastUsedTag()
-        }
-        _state.value = state.value.copy(
-            lastUsedTag = lastUsedTag
-        )
+        getLastUsedTagJob?.cancel()
+            getLastUsedTagJob = tagUseCases.getLastUsedTag()
+                .onEach { tag ->
+                _state.value = state.value.copy(
+                    lastUsedTag = tag
+                )
+            }.launchIn(viewModelScope)
+
+
+
     }
 }

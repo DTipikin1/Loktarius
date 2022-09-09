@@ -14,7 +14,7 @@ interface ActivityRepository {
 
     suspend fun deleteTag(tag: Tag)
 
-    suspend fun getLastUsedTag(): Tag?
+    fun getLastUsedTag(): Flow<Tag?>
 
     fun getActivities(): Flow<List<Activity>>
 
