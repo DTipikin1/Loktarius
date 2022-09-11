@@ -1,10 +1,12 @@
 package com.loktarius.feature_activity.presentation.activities
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loktarius.feature_activity.domain.model.Tag
+import com.loktarius.feature_activity.domain.use_case.tags.GetTag
 import com.loktarius.feature_activity.domain.use_case.tags.TagUseCases
 import com.loktarius.feature_activity.domain.util.OrderType
 import com.loktarius.feature_activity.domain.util.TagOrder
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ActivitiesViewModel @Inject constructor(
+class HomeScreenTagsViewModel @Inject constructor(
     private val tagUseCases: TagUseCases
 ) : ViewModel() {
 
@@ -56,8 +58,12 @@ class ActivitiesViewModel @Inject constructor(
                 }
             }
             is TagsEvent.ChooseTag -> {
+                var tag: Tag?
                 viewModelScope.launch {
-                    event.tag.id?.let { tagUseCases.getTag(it) }
+                    tag = event.tag.id?.let { tagUseCases.getTag(it) }
+                    _state.value = state.value.copy(
+                        lastUsedTag = tag?.id?.let { tagUseCases.getTag(it) }
+                    )
                 }
             }
 

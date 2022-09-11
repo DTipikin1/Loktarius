@@ -5,38 +5,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PointMode
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.loktarius.feature_activity.domain.model.Tag
-import com.loktarius.feature_activity.presentation.activities.ActivitiesViewModel
+import com.loktarius.feature_activity.presentation.activities.HomeScreenTagsViewModel
+import com.loktarius.feature_activity.presentation.activities.TagsEvent
 import com.loktarius.feature_activity.presentation.activities.components.TagItem
 import com.loktarius.feature_activity.presentation.util.Screen
 import com.loktarius.ui.theme.*
 import kotlinx.coroutines.launch
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -44,11 +25,11 @@ import kotlin.math.sin
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: ActivitiesViewModel = hiltViewModel()
+    viewModel: HomeScreenTagsViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
-    var state2 = remember {
-        mutableStateOf(state)
+    val tagsState = viewModel.state.value
+    var lastUsedTagHS by remember {
+        mutableStateOf(tagsState.lastUsedTag)
     }
 
 
@@ -71,7 +52,7 @@ fun HomeScreen(
                 AddTagButton(navController = navController)
                 LazyRow(modifier = Modifier.fillMaxWidth()) {
 
-                    items(state.tags) { tag ->
+                    items(tagsState.tags) { tag ->
                         TagItem(
                             tag = tag,
                             modifier = Modifier
@@ -79,7 +60,7 @@ fun HomeScreen(
                                 .height(50.dp)
                                 .combinedClickable(
                                     onClick = {
-                                        state.lastUsedTag = tag
+                                        viewModel.onEvent(TagsEvent.ChooseTag(tag))
                                     },
                                     onLongClick = {
                                         navController.navigate(
@@ -119,7 +100,7 @@ fun HomeScreen(
                 Text(text = "Tag")
 
             }
-            Text(text = state.lastUsedTag.toString())
+            Text(text = tagsState.lastUsedTag.toString())
 
             Spacer(modifier = Modifier.padding(50.dp))
             Text("00:00:00",
