@@ -1,6 +1,5 @@
 package com.loktarius.feature_activity.presentation.add_edit_activity
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

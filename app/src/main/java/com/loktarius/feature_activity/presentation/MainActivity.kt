@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.loktarius.feature_activity.presentation.HomeScreen
 import com.loktarius.feature_activity.presentation.add_edit_activity.AddEditTagScreen
 import com.loktarius.feature_activity.presentation.util.Screen
 import com.loktarius.ui.theme.LoktariusTheme

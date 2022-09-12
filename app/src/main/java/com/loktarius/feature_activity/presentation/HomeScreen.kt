@@ -15,23 +15,23 @@ import androidx.navigation.NavController
 import com.loktarius.feature_activity.presentation.activities.HomeScreenTagsViewModel
 import com.loktarius.feature_activity.presentation.activities.TagsEvent
 import com.loktarius.feature_activity.presentation.activities.components.TagItem
+import com.loktarius.feature_activity.domain.timers.stopwatch.StopwatchViewModel
+import com.loktarius.feature_activity.presentation.timers.Stopwatch
 import com.loktarius.feature_activity.presentation.util.Screen
 import com.loktarius.ui.theme.*
 import kotlinx.coroutines.launch
+import kotlin.time.ExperimentalTime
 
-
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalTime::class)
 @ExperimentalMaterialApi
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: HomeScreenTagsViewModel = hiltViewModel()
-) {
-    val tagsState = viewModel.state.value
-    var lastUsedTagHS by remember {
-        mutableStateOf(tagsState.lastUsedTag)
-    }
+    tagsViewModel: HomeScreenTagsViewModel = hiltViewModel(),
+    stopwatchViewModel: StopwatchViewModel = hiltViewModel()
 
+) {
+    val tagsState = tagsViewModel.state.value
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
@@ -45,7 +45,7 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .height(200.dp),
             ) {
-                Column() {
+                Column {
 
 
                 Text(text = "Long click on tag to edit it, quick click to chose it")
@@ -60,7 +60,7 @@ fun HomeScreen(
                                 .height(50.dp)
                                 .combinedClickable(
                                     onClick = {
-                                        viewModel.onEvent(TagsEvent.ChooseTag(tag))
+                                        tagsViewModel.onEvent(TagsEvent.ChooseTag(tag))
                                     },
                                     onLongClick = {
                                         navController.navigate(
@@ -103,11 +103,8 @@ fun HomeScreen(
             Text(text = tagsState.lastUsedTag.toString())
 
             Spacer(modifier = Modifier.padding(50.dp))
-            Text("00:00:00",
-            )
-            Button(onClick = {/*TODO*/}) {
-                Text("Start")
-            }
+
+            Stopwatch(stopwatchViewModel)
 
         }
 
@@ -124,6 +121,22 @@ fun AddTagButton(navController: NavController) {
         Text(text = "Add Tag")
     }
 }
+
+@OptIn(ExperimentalTime::class)
+@Composable
+fun Stopwatch(
+    viewModel: StopwatchViewModel
+) {
+    Stopwatch(isPlaying = viewModel.isPlaying,
+        seconds = viewModel.seconds,
+        minutes = viewModel.minutes,
+        hours = viewModel.hours,
+        onStart = {viewModel.start()},
+        onPause = {viewModel.pause()},
+        onStop = {viewModel.stop()}
+    )
+}
+
 
 
 

@@ -1,12 +1,10 @@
 package com.loktarius.feature_activity.presentation.activities
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loktarius.feature_activity.domain.model.Tag
-import com.loktarius.feature_activity.domain.use_case.tags.GetTag
 import com.loktarius.feature_activity.domain.use_case.tags.TagUseCases
 import com.loktarius.feature_activity.domain.util.OrderType
 import com.loktarius.feature_activity.domain.util.TagOrder
