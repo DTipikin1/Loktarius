@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.presentation.activities.components
+package com.loktarius.feature_activity.presentation.tags.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

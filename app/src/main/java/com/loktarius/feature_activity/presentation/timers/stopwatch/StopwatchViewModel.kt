@@ -1,19 +1,33 @@
-package com.loktarius.feature_activity.domain.timers.stopwatch
+package com.loktarius.feature_activity.presentation.timers.stopwatch
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.loktarius.feature_activity.domain.model.Activity
+import com.loktarius.feature_activity.domain.use_case.activities.ActivityUseCases
+import com.loktarius.feature_activity.presentation.activities.ActivitiesEvent
+import com.loktarius.feature_activity.presentation.activities.HomeScreenActivityViewModel
+import com.loktarius.feature_activity.presentation.tags.HomeScreenTagsViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
+import javax.inject.Inject
 import kotlin.concurrent.fixedRateTimer
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class StopwatchViewModel: ViewModel() {
+@HiltViewModel
+class StopwatchViewModel @Inject constructor(): ViewModel() {
 
     private var time: Duration = Duration.ZERO
     private lateinit var timer: Timer
+
+    var startingTime : Long = 0
+    var endingTime : Long = 0
+    var duration: Long = 0
+
 
     var seconds by mutableStateOf("00")
     var minutes by mutableStateOf("00")
@@ -21,6 +35,7 @@ class StopwatchViewModel: ViewModel() {
     var isPlaying by mutableStateOf(false)
 
     fun start() {
+        startingTime = System.currentTimeMillis()
         timer = fixedRateTimer(initialDelay = 1000L, period = 1000L) {
             time = time.plus(Duration.seconds(1))
             updateTimeStates()
@@ -39,14 +54,24 @@ class StopwatchViewModel: ViewModel() {
         return this.toString().padStart(2,'0')
     }
 
-    fun pause() {
-        timer.cancel()
-        isPlaying = false
+    fun save() {
+        endingTime = System.currentTimeMillis() - startingTime
+
+            Log.d("ACTIVITY ADDED","test")
+        resetStopwatch()
     }
 
     fun stop() {
-        pause()
+        resetStopwatch()
+    }
+
+    private fun resetStopwatch() {
+        timer.cancel()
+        isPlaying = false
         time = Duration.ZERO
         updateTimeStates()
+        startingTime = 0
+        endingTime = 0
+
     }
 }

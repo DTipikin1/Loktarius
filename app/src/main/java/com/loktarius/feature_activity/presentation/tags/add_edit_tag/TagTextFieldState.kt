@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.presentation.add_edit_activity
+package com.loktarius.feature_activity.presentation.tags.add_edit_tag
 
 data class TagTextFieldState(
     val text: String = "",

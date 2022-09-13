@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.presentation.activities
+package com.loktarius.feature_activity.presentation.tags
 
 import com.loktarius.feature_activity.domain.model.Tag
 import com.loktarius.feature_activity.domain.util.OrderType

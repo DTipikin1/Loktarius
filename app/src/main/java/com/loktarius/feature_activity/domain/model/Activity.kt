@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Activity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val tagId: Int,
     val startingTime: Long,
     val endingTime: Long

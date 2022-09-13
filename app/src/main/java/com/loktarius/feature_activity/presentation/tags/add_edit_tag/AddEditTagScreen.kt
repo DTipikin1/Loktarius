@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.presentation.add_edit_activity
+package com.loktarius.feature_activity.presentation.tags.add_edit_tag
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.loktarius.feature_activity.presentation.add_edit_activity.components.TransparentHintTextField
+import com.loktarius.feature_activity.presentation.tags.add_edit_tag.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

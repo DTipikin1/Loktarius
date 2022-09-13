@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.presentation.activities
+package com.loktarius.feature_activity.presentation.tags
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

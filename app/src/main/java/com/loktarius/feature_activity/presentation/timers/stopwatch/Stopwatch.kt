@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.presentation.timers
+package com.loktarius.feature_activity.presentation.timers.stopwatch
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.loktarius.feature_activity.domain.model.Tag
 
 @Composable
 fun Stopwatch(
@@ -22,8 +24,9 @@ fun Stopwatch(
     minutes: String,
     hours: String,
     onStart: () -> Unit = {},
-    onPause: () -> Unit = {},
+    onSave: () -> Unit = {},
     onStop: () -> Unit = {},
+
 ) {
     //Scaffold {
         Column(Modifier.fillMaxWidth(),
@@ -45,11 +48,11 @@ fun Stopwatch(
             //Spacer(Modifier.weight(1f))
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.background(Color.LightGray, RoundedCornerShape(50))
+                modifier = Modifier.background(Color.DarkGray, RoundedCornerShape(50))
             ) {
                 if (isPlaying) {
-                    IconButton(onClick = onPause) {
-                        Icon(imageVector = Icons.Filled.Pause, contentDescription = "")
+                    IconButton(onClick = onSave) {
+                        Icon(imageVector = Icons.Filled.Save, contentDescription = "")
                     }
                 }
                 else {

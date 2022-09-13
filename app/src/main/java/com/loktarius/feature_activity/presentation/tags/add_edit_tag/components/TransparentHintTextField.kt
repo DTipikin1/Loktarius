@@ -1,4 +1,4 @@
-package com.loktarius.feature_activity.presentation.add_edit_activity.components
+package com.loktarius.feature_activity.presentation.tags.add_edit_tag.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

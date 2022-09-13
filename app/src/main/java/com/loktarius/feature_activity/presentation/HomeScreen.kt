@@ -12,11 +12,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.loktarius.feature_activity.presentation.activities.HomeScreenTagsViewModel
-import com.loktarius.feature_activity.presentation.activities.TagsEvent
-import com.loktarius.feature_activity.presentation.activities.components.TagItem
-import com.loktarius.feature_activity.domain.timers.stopwatch.StopwatchViewModel
-import com.loktarius.feature_activity.presentation.timers.Stopwatch
+import com.loktarius.feature_activity.presentation.activities.HomeScreenActivityViewModel
+import com.loktarius.feature_activity.presentation.activities.components.ActivityItem
+import com.loktarius.feature_activity.presentation.tags.HomeScreenTagsViewModel
+import com.loktarius.feature_activity.presentation.tags.TagsEvent
+import com.loktarius.feature_activity.presentation.tags.components.TagItem
+import com.loktarius.feature_activity.presentation.timers.stopwatch.StopwatchViewModel
+import com.loktarius.feature_activity.presentation.timers.stopwatch.Stopwatch
 import com.loktarius.feature_activity.presentation.util.Screen
 import com.loktarius.ui.theme.*
 import kotlinx.coroutines.launch
@@ -27,11 +29,13 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun HomeScreen(
     navController: NavController,
-    tagsViewModel: HomeScreenTagsViewModel = hiltViewModel(),
+    homeScreenTagsViewModel: HomeScreenTagsViewModel = hiltViewModel(),
+    homeScreenActivityViewModel: HomeScreenActivityViewModel = hiltViewModel(),
     stopwatchViewModel: StopwatchViewModel = hiltViewModel()
 
 ) {
-    val tagsState = tagsViewModel.state.value
+    val tagsState = homeScreenTagsViewModel.state.value
+    val activityState = homeScreenActivityViewModel.state.value
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
@@ -51,7 +55,6 @@ fun HomeScreen(
                 Text(text = "Long click on tag to edit it, quick click to chose it")
                 AddTagButton(navController = navController)
                 LazyRow(modifier = Modifier.fillMaxWidth()) {
-
                     items(tagsState.tags) { tag ->
                         TagItem(
                             tag = tag,
@@ -60,7 +63,7 @@ fun HomeScreen(
                                 .height(50.dp)
                                 .combinedClickable(
                                     onClick = {
-                                        tagsViewModel.onEvent(TagsEvent.ChooseTag(tag))
+                                        homeScreenTagsViewModel.onEvent(TagsEvent.ChooseTag(tag))
                                     },
                                     onLongClick = {
                                         navController.navigate(
@@ -106,6 +109,19 @@ fun HomeScreen(
 
             Stopwatch(stopwatchViewModel)
 
+
+            LazyRow(modifier = Modifier.fillMaxWidth()
+                    .width(50.dp)
+                    .height(50.dp)) {
+                items(activityState.activities) { activity ->
+                        ActivityItem(activity = activity)
+
+                }
+
+            }
+
+
+
         }
 
         }
@@ -125,17 +141,19 @@ fun AddTagButton(navController: NavController) {
 @OptIn(ExperimentalTime::class)
 @Composable
 fun Stopwatch(
-    viewModel: StopwatchViewModel
+    stopwatchViewModel: StopwatchViewModel,
+
 ) {
-    Stopwatch(isPlaying = viewModel.isPlaying,
-        seconds = viewModel.seconds,
-        minutes = viewModel.minutes,
-        hours = viewModel.hours,
-        onStart = {viewModel.start()},
-        onPause = {viewModel.pause()},
-        onStop = {viewModel.stop()}
+    Stopwatch(isPlaying = stopwatchViewModel.isPlaying,
+        seconds = stopwatchViewModel.seconds,
+        minutes = stopwatchViewModel.minutes,
+        hours = stopwatchViewModel.hours,
+        onStart = {stopwatchViewModel.start()},
+        onSave = {stopwatchViewModel.save()},
+        onStop = {stopwatchViewModel.stop()},
     )
 }
+
 
 
 
