@@ -1,10 +1,16 @@
 package com.loktarius.feature_activity.presentation
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.Stop
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,6 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.loktarius.feature_activity.domain.model.Activity
+import com.loktarius.feature_activity.domain.model.Tag
+import com.loktarius.feature_activity.presentation.activities.ActivitiesEvent
 import com.loktarius.feature_activity.presentation.activities.HomeScreenActivityViewModel
 import com.loktarius.feature_activity.presentation.activities.components.ActivityItem
 import com.loktarius.feature_activity.presentation.tags.HomeScreenTagsViewModel
@@ -107,14 +116,35 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.padding(50.dp))
 
-            Stopwatch(stopwatchViewModel)
+            Stopwatch(stopwatchViewModel,homeScreenTagsViewModel)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.background(Color.DarkGray, RoundedCornerShape(50))
+            ) {
+                if (stopwatchViewModel.isPlaying) {
+                    IconButton(onClick = { saveTimeAndCreateActivity(stopwatchViewModel,homeScreenTagsViewModel,homeScreenActivityViewModel) }) {
+                        Icon(imageVector = Icons.Filled.Save, contentDescription = "")
+
+                    }
+                }
+                else {
+                    IconButton(onClick =  { stopwatchViewModel.start() }) {
+                        Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = "")
+                    }
+                }
+                IconButton(onClick = { stopwatchViewModel.stop() }) {
+                    Icon(imageVector = Icons.Filled.Stop, contentDescription = "")
+                }
+
+            }
+            Spacer(Modifier.height(10.dp))
 
 
             LazyRow(modifier = Modifier.fillMaxWidth()
                     .width(50.dp)
                     .height(50.dp)) {
-                items(activityState.activities) { activity ->
-                        ActivityItem(activity = activity)
+                        items(activityState.activities) { activity ->
+                            ActivityItem(activity = activity)
 
                 }
 
@@ -142,16 +172,38 @@ fun AddTagButton(navController: NavController) {
 @Composable
 fun Stopwatch(
     stopwatchViewModel: StopwatchViewModel,
-
+    tagsViewModel: HomeScreenTagsViewModel
 ) {
     Stopwatch(isPlaying = stopwatchViewModel.isPlaying,
         seconds = stopwatchViewModel.seconds,
         minutes = stopwatchViewModel.minutes,
         hours = stopwatchViewModel.hours,
         onStart = {stopwatchViewModel.start()},
-        onSave = {stopwatchViewModel.save()},
+        onSave = { tagsViewModel.state.value.lastUsedTag?.let { stopwatchViewModel.save(it) } },
         onStop = {stopwatchViewModel.stop()},
     )
+}
+
+@OptIn(ExperimentalTime::class)
+fun saveTimeAndCreateActivity(
+    stopwatchViewModel: StopwatchViewModel,
+    tagsViewModel: HomeScreenTagsViewModel,
+    activityViewModel: HomeScreenActivityViewModel,
+) {
+    var tag: Tag? = tagsViewModel.state.value.lastUsedTag
+    var activity: Activity = if (tag != null ) {
+        stopwatchViewModel.save(tag)
+    } else {
+        //negative values for debugging
+        Activity(
+            id = -2,
+            tagId = -2,
+            startingTime = 0,
+            endingTime = 0
+        )
+    }
+    Log.d("HOMESCREEN SAVE",activity.toString())
+    activityViewModel.onEvent(ActivitiesEvent.CreateActivity(activity))
 }
 
 

@@ -10,7 +10,7 @@ import com.loktarius.feature_activity.domain.model.Tag
         Activity::class,
         Tag::class
     ],
-    version = 3
+    version = 7
 )
 abstract class ActivityDatabase: RoomDatabase() {
 

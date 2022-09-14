@@ -46,26 +46,7 @@ fun Stopwatch(
 
             }
             //Spacer(Modifier.weight(1f))
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.background(Color.DarkGray, RoundedCornerShape(50))
-            ) {
-                if (isPlaying) {
-                    IconButton(onClick = onSave) {
-                        Icon(imageVector = Icons.Filled.Save, contentDescription = "")
-                    }
-                }
-                else {
-                    IconButton(onClick = onStart) {
-                        Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = "")
-                    }
-                }
-                IconButton(onClick = onStop) {
-                    Icon(imageVector = Icons.Filled.Stop, contentDescription = "")
-                }
 
-            }
-            Spacer(Modifier.height(10.dp))
 
         }
     //}

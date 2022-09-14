@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.loktarius.feature_activity.domain.model.Activity
+import com.loktarius.feature_activity.domain.model.Tag
 import com.loktarius.feature_activity.domain.use_case.activities.ActivityUseCases
 import com.loktarius.feature_activity.presentation.activities.ActivitiesEvent
 import com.loktarius.feature_activity.presentation.activities.HomeScreenActivityViewModel
@@ -54,11 +55,22 @@ class StopwatchViewModel @Inject constructor(): ViewModel() {
         return this.toString().padStart(2,'0')
     }
 
-    fun save() {
-        endingTime = System.currentTimeMillis() - startingTime
-
-            Log.d("ACTIVITY ADDED","test")
+    fun save(tag: Tag): Activity {
+        endingTime = System.currentTimeMillis()
+        var activity =  if (tag.id != null) Activity(
+            id = 0,
+            startingTime = startingTime,
+            endingTime = endingTime,
+            tagId = tag.id
+        )
+        else Activity(
+            id = -1,
+            startingTime = startingTime,
+            endingTime = endingTime,
+            tagId = -1
+        )
         resetStopwatch()
+        return activity
     }
 
     fun stop() {
