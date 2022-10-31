@@ -2,14 +2,14 @@ package com.loktarius.di
 
 import android.app.Application
 import androidx.room.Room
-import com.loktarius.feature_activity.data.data_source.ActivityDatabase
-import com.loktarius.feature_activity.data.repository.ActivityRepositoryImpl
-import com.loktarius.feature_activity.domain.repository.ActivityRepository
-import com.loktarius.feature_activity.domain.use_case.activities.ActivityUseCases
-import com.loktarius.feature_activity.domain.use_case.activities.AddActivity
-import com.loktarius.feature_activity.domain.use_case.activities.DeleteActivity
-import com.loktarius.feature_activity.domain.use_case.activities.GetActivities
-import com.loktarius.feature_activity.domain.use_case.tags.*
+import com.loktarius.data.data_source.ActivityDatabase
+import com.loktarius.data.repository.ActivityRepositoryImpl
+import com.loktarius.domain.repository.ActivityRepository
+import com.loktarius.domain.use_case.activities.ActivityUseCases
+import com.loktarius.domain.use_case.activities.AddActivity
+import com.loktarius.domain.use_case.activities.DeleteActivity
+import com.loktarius.domain.use_case.activities.GetActivities
+import com.loktarius.domain.use_case.tags.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
